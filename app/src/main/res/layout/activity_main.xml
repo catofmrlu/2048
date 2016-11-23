@@ -39,11 +39,13 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.example.mrlu2048.GameView
+    <com.example.mrlu.a2048.GameView
+        android:id="@+id/gv_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-        >
-
-    </com.example.mrlu2048.GameView>
+    </com.example.mrlu.a2048.GameView>
 
 </LinearLayout>
 </LinearLayout>

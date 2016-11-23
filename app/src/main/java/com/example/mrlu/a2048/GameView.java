@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.VideoView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import static android.R.attr.x;
 
 
@@ -18,6 +22,11 @@ import static android.R.attr.x;
  */
 
 public class GameView extends GridLayout {
+
+    private Card cards[][] = new Card[4][4];
+    private List<Point> emptyCards = new ArrayList<>();
+    Random rd = new Random();
+    int score = 0;
 
 
     ///
@@ -32,8 +41,8 @@ public class GameView extends GridLayout {
         initGame();
     }
 
-    public GameView(Context context, AttributeSet arrs, int defStyle) {
-        super(context);
+    public GameView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
         initGame();
     }
 
@@ -216,18 +225,18 @@ public class GameView extends GridLayout {
     }
 
     private void gameOver() {
-        boolean OverGame ();
+        boolean OverGame = true;
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; y++) {
-                if (cards[x][y].getNumber() <= 0)||
-                (x > 0 && cards[x][y].getNumbers() ==
-                        cards[x - 1][y].getNumbers()) ||
-                        (x < 3 && cards[x][y].getNumbers() ==
-                                cards[x + 1][y].getNumbers()) ||
-                        (y > 0 && cards[x][y].getNumbers() ==
-                                cards[x][y - 1].getNumbers()) ||
-                        (y < 3 && cards[x][y].getNumbers() ==
-                                cards[x][y + 1].getNumbers()) {
+                if ((cards[x][y].getNumber() <= 0) ||
+                (x > 0 && cards[x][y].getNumber() ==
+                        cards[x - 1][y].getNumber()) ||
+                        (x < 3 && cards[x][y].getNumber() ==
+                                cards[x + 1][y].getNumber()) ||
+                        (y > 0 && cards[x][y].getNumber() ==
+                                cards[x][y - 1].getNumber()) ||
+                        (y < 3 && cards[x][y].getNumber() ==
+                                cards[x][y + 1].getNumber())) {
                     OverGame = false;
                 }
 
@@ -256,7 +265,7 @@ public class GameView extends GridLayout {
                 c = new Card(getContext());
 
                 cards[x][y] = c;
-                c.setNumbers(0);
+                c.setNumber(0);
                 addView(c, width, height);
 
             }
@@ -273,10 +282,10 @@ public class GameView extends GridLayout {
     }
 
     private void createRandomCard() {
-        emptyCards.cleaar();
+        emptyCards.clear();
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
-                if (cards[x][y].getNumbers() < 2) {
+                if (cards[x][y].getNumber() < 2) {
                     Point point = new Point(x, y);
 
                     emptyCards.add(point);
@@ -285,7 +294,8 @@ public class GameView extends GridLayout {
             }
         }
 
-        int selat = rd.nextInt(emptyCards.get(selat));
+        int selat = rd.nextInt(emptyCards.size());
+        Point p = emptyCards.get(selat);
         emptyCards.remove(selat);
         int number = 0;
         if (rd.nextInt(10) > 4) {
@@ -297,6 +307,7 @@ public class GameView extends GridLayout {
         }
 
         cards[p.x][p.y].setNumber(number);
+
     }
 
     public void gameStart(){
